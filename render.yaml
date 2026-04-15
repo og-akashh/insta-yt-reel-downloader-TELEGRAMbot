@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: telegram-media-bot
+    runtime: image
+    repo: https://github.com/YOUR_USERNAME/telegram-media-bot
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: DELETE_AFTER_MINUTES
+        value: 20
+      - key: MAX_FILE_SIZE_MB
+        value: 50
+      - key: LOG_LEVEL
+        value: INFO
+    healthCheckPath: /health
