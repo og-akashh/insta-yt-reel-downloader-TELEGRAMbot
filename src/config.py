@@ -8,17 +8,20 @@ class Config:
     if not BOT_TOKEN:
         raise ValueError("BOT_TOKEN is required")
 
-    # Render provides PORT environment variable
     PORT = int(os.getenv("PORT", 8000))
 
-    # Download settings
     DOWNLOAD_PATH = os.getenv("DOWNLOAD_PATH", "downloads")
     MAX_FILE_SIZE_MB = int(os.getenv("MAX_FILE_SIZE_MB", 50))
     MAX_VIDEO_DURATION = int(os.getenv("MAX_VIDEO_DURATION", 120))
     DELETE_AFTER_MINUTES = int(os.getenv("DELETE_AFTER_MINUTES", 20))
-
-    # Logging
     LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
+
+    @classmethod
+    def validate(cls):
+        """Validate configuration and create necessary directories."""
+        if not cls.BOT_TOKEN:
+            raise ValueError("BOT_TOKEN is required")
+        cls.ensure_download_dir()
 
     @classmethod
     def ensure_download_dir(cls):
