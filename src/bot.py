@@ -17,7 +17,6 @@ class HealthHandler(BaseHTTPRequestHandler):
             self.send_response(404)
             self.end_headers()
     def log_message(self, format, *args):
-        # Suppress health check logs
         pass
 
 def run_health_server():
@@ -27,8 +26,8 @@ def run_health_server():
     server.serve_forever()
 
 def main():
+    # Validate config (creates download dir and checks token)
     Config.validate()
-    Config.ensure_download_dir()
     setup_logging(Config.LOG_LEVEL)
 
     # Start health check server in background thread (required for Render)
